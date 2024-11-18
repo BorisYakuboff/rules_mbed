@@ -63,11 +63,11 @@ genrule(
             "@com_arm_developer_gcc_windows_x86_64//:everything",
             "@com_arm_developer_gcc_windows_x86_64//:cpp",
         ],
-        ":darwin_x86_64" : [
+        ":macos_x86_64" : [
             "@com_arm_developer_gcc_darwin_x86_64//:everything",
             "@com_arm_developer_gcc_darwin_x86_64//:cpp",
         ],
-        ":darwin_arm64" : [
+        ":macos_arm64" : [
             "@com_arm_developer_gcc_darwin_arm64//:everything",
             "@com_arm_developer_gcc_darwin_arm64//:cpp",
         ],
