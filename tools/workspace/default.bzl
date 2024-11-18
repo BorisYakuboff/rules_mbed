@@ -25,7 +25,7 @@ DEFAULT_CONFIG = {
 
 def add_default_repositories(*, config = DEFAULT_CONFIG, excludes = []):
     if "arm_gcc" not in excludes:
-        arm_gcc_repository(name = "com_arm_developer_gcc")
+        arm_gcc_repository()
     if "mbed" not in excludes:
         mbed_repository(name = "com_github_ARMmbed_mbed-os",
                         target = config["mbed_target"],
