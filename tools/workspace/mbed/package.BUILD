@@ -72,7 +72,6 @@ genrule(
             "@com_arm_developer_gcc_darwin_arm64//:cpp",
         ],
     })
-    print(f'tools={tools}')
     cmd = "$(location @com_arm_developer_gcc//:cpp) -P {} $< -o $@".format(
         " ".join(["-D{}".format(x) for x in @DEFINES@
                   if x.find('|') == -1])),

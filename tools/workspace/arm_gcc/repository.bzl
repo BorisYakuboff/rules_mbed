@@ -18,6 +18,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 
 def arm_gcc_repository():
+    print('arm_gcc_repository')
     http_archive(
         name = "com_arm_developer_gcc_linux_x86_64",
         urls = [
