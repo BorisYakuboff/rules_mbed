@@ -37,8 +37,7 @@ def arm_gcc_repository():
         build_file = Label("//tools/workspace/arm_gcc:package.BUILD"),
     )
     http_archive(
-        name = "com_arm_developer_gcc",
-        #name = "com_arm_developer_gcc_darwin_x86_64",
+        name = "com_arm_developer_gcc_darwin_x86_64",
         urls = [
             "https://developer.arm.com/-/media/Files/downloads/gnu/11.3.rel1/binrel/arm-gnu-toolchain-11.3.rel1-darwin-x86_64-arm-none-eabi.tar.xz",
         ],
