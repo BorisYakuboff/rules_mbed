@@ -39,5 +39,3 @@ platform(
         "//cpu:stm32g4",
     ],
 )
-
-exports_files(["detect_platform.py"])

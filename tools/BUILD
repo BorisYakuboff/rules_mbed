@@ -17,10 +17,16 @@
 package(default_visibility = ["//visibility:public"])
 
 environment(name = "k8")
+
 environment(name = "stm32f4")
 
 environment_group(
     name = "cpus",
-    environments = [":k8", ":stm32f4"],
     defaults = [":stm32f4"],
+    environments = [
+        ":k8",
+        ":stm32f4",
+    ],
 )
+
+exports_files(["detect_platform.py"])
