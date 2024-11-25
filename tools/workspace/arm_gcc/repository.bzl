@@ -24,22 +24,9 @@ _arm_gcc_distribution = {
     },
 }  #826353d45e7fbaa9b87c514e7c758a82f349cb7fc3fd949423687671539b29cf
 
-def detect_platform():
-    system = platform.system().lower()
-    machine = platform.machine().lower()
-    if system.startswith("linux"):
-        return sysconfig.get_platform()
-    if system.startswith("darwin"):
-        return "darwin-" + machine
-    depth, arch = platform.architecture()
-    if arch.startswith("Windows"):
-        if depth.startswith("64"):
-            return "windows-x86_64.exe"
-    fail("platform not supported")
-
 def arm_gcc_repository(name):
     version = "11.3.rel1"
-    platform = detect_platform()
+    platform = "@com_github_mjbots_rules_mbed//tools:detect_platform.py"
     print('platform="{}"'.format(platform))
     base_url = "https://developer.arm.com/-/media/Files/downloads/gnu"
     distribution = _arm_gcc_distribution[version][platform]
