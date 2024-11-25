@@ -54,23 +54,10 @@ genrule(
     name = "preprocess_linker_script",
     srcs = ["linker_script.ld.in"],
     outs = ["linker_script.ld"],
-    tools = select({
-        ":linux_x86_64" : [
-            "@com_arm_developer_gcc_linux_x86_64//:everything",
-            "@com_arm_developer_gcc_linux_x86_64//:cpp",
-        ],
-        ":windows_x64" : [
-            "@com_arm_developer_gcc_windows_x86_64//:everything",
-            "@com_arm_developer_gcc_windows_x86_64//:cpp",
-        ],
-        ":macos_x86_64" : [
-            "@com_arm_developer_gcc_darwin_x86_64//:everything",
-            "@com_arm_developer_gcc_darwin_x86_64//:cpp",
-        ],
-        ":macos_arm64" : [
-            "@com_arm_developer_gcc_darwin_arm64//:everything",
-            "@com_arm_developer_gcc_darwin_arm64//:cpp",
-        ],
+    tools = [
+            "@com_arm_developer_gcc//:everything",
+            "@com_arm_developer_gcc//:cpp",
+        ]
     })
     cmd = "$(location @com_arm_developer_gcc//:cpp) -P {} $< -o $@".format(
         " ".join(["-D{}".format(x) for x in @DEFINES@
