@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+exports_files(["detect_platform.py"])
+
 package(default_visibility = ["//visibility:public"])
 
 environment(name = "k8")
@@ -28,5 +30,3 @@ environment_group(
         ":stm32f4",
     ],
 )
-
-exports_files(["detect_platform.py"])
