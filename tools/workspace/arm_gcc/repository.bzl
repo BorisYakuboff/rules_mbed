@@ -41,6 +41,6 @@ def arm_gcc_repository():
             url,
         ],
         sha256 = file_sha256,
-        strip_prefix = filename,
+        strip_prefix = prefix,
         build_file = Label("//tools/workspace/arm_gcc:package.BUILD"),
     )
