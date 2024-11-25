@@ -26,6 +26,8 @@ _arm_gcc_distribution =  {
 }
 
 def arm_gcc_repository():
+    logger = logging.getLogger(__name__)
+
     version = '11.3.rel1'
     platform = 'macos_x86_64'
     base_url = "https://developer.arm.com/-/media/Files/downloads/gnu"
@@ -34,7 +36,7 @@ def arm_gcc_repository():
     file_sha256 = distribution[1]
     url = f'{base_url}/{version}/binrel/{filename}'
 
-    print("arm_gcc_repository")
+    logger.debug('arm_gcc_repository %s', url)
     http_archive(
         name = "com_arm_developer_gcc",
         urls = [
