@@ -34,6 +34,7 @@ def arm_gcc_repository():
     file_sha256 = distribution[1]
     url = "{}/{}/binrel/{}".format(base_url, version, filename)
 
+    print("platform={} url={}".format(platform, url))
     http_archive(
         name = "com_arm_developer_gcc",
         urls = [
