@@ -26,7 +26,7 @@ _arm_gcc_distribution = {
 
 def arm_gcc_repository(name):
     version = "11.3.rel1"
-    platform = "@com_github_mjbots_rules_mbed//tools:detect_platform.py"
+    platform = "darwin-x86_64"  #"@com_github_mjbots_rules_mbed//tools:detect_platform.py"
     print('platform="{}"'.format(platform))
     base_url = "https://developer.arm.com/-/media/Files/downloads/gnu"
     distribution = _arm_gcc_distribution[version][platform]
