@@ -18,15 +18,29 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 _arm_gcc_distribution = {
     "11.3.rel1": {
-        "linux_x86_64": ("arm-gnu-toolchain-11.3.rel1-x86_64-arm-none-eabi.tar.xz", "d420d87f68615d9163b99bbb62fe69e85132dc0a8cd69fca04e813597fe06121", "arm-gnu-toolchain-11.3.rel1-x86_64-arm-none-eabi"),
-        "windows_x86_64": ("arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi.zip", "e46fda043c0ce83582bc8db4b3ef85f77f4beb7333344c2f4193c17e1167a095", "arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi"),
-        "macos_x86_64": ("arm-gnu-toolchain-11.3.rel1-darwin-x86_64-arm-none-eabi.tar.xz", "826353d45e7fbaa9b87c514e7c758a82f349cb7fc3fd949423687671539b29cf", "arm-gnu-toolchain-11.3.rel1-darwin-x86_64-arm-none-eabi"),
+        "linux-x86_64": ("arm-gnu-toolchain-11.3.rel1-x86_64-arm-none-eabi.tar.xz", "d420d87f68615d9163b99bbb62fe69e85132dc0a8cd69fca04e813597fe06121", "arm-gnu-toolchain-11.3.rel1-x86_64-arm-none-eabi"),
+        "windows-x86_64": ("arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi.zip", "e46fda043c0ce83582bc8db4b3ef85f77f4beb7333344c2f4193c17e1167a095", "arm-gnu-toolchain-13.3.rel1-mingw-w64-i686-arm-none-eabi"),
+        "darwin-x86_64": ("arm-gnu-toolchain-11.3.rel1-darwin-x86_64-arm-none-eabi.tar.xz", "826353d45e7fbaa9b87c514e7c758a82f349cb7fc3fd949423687671539b29cf", "arm-gnu-toolchain-11.3.rel1-darwin-x86_64-arm-none-eabi"),
     },
 }  #826353d45e7fbaa9b87c514e7c758a82f349cb7fc3fd949423687671539b29cf
 
-def arm_gcc_repository():
+def detect_platform():
+    system = platform.system().lower()
+    machine = platform.machine().lower()
+    if system.startswith("linux"):
+        return sysconfig.get_platform()
+    if system.startswith("darwin"):
+        return "darwin-" + machine
+    depth, arch = platform.architecture()
+    if arch.startswith("Windows"):
+        if depth.startswith("64"):
+            return "windows-x86_64.exe"
+    fail("platform not supported")
+
+def arm_gcc_repository(name):
     version = "11.3.rel1"
-    platform = "macos_x86_64"
+    platform = detect_platform()
+    print('platform="{}"'.format(platform))
     base_url = "https://developer.arm.com/-/media/Files/downloads/gnu"
     distribution = _arm_gcc_distribution[version][platform]
     filename = distribution[0]
@@ -34,12 +48,9 @@ def arm_gcc_repository():
     prefix = distribution[2]
     url = "{}/{}/binrel/{}".format(base_url, version, filename)
 
-    print("platform={} url={}".format(platform, url))
     http_archive(
-        name = "com_arm_developer_gcc",
-        urls = [
-            url,
-        ],
+        name = name,
+        urls = [url],
         sha256 = file_sha256,
         strip_prefix = prefix,
         build_file = Label("//tools/workspace/arm_gcc:package.BUILD"),
